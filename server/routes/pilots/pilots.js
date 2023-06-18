@@ -84,6 +84,8 @@ router.post('/rides', pilotRequired, async (req, res, next) => {
   try {
     // Get a test source, using the given testing behavior
     let source;
+    console.log(req.body)
+
     if (req.body.immediate_balance) {
       source = getTestSource('immediate_balance');
     } else if (req.body.payout_limit) {
@@ -130,7 +132,7 @@ router.post('/rides', pilotRequired, async (req, res, next) => {
     }
     // Add the Stripe charge reference to the ride and save it
     ride.stripeChargeId = charge.id;
-    ride.save();
+    await ride.save();
   } catch (err) {
     console.log(err);
     // Return a 402 Payment Required error code

@@ -9,7 +9,13 @@ const router = express.Router();
 const Pilot = require('../../models/pilot');
 const Passenger = require('../../models/passenger');
 const Ride = require('../../models/ride');
-
+// Middleware that requires a logged-in pilot
+function pilotRequired(req, res, next) {
+  if (!req.isAuthenticated()) {
+    return res.redirect('/pilots/login');
+  }
+  next();
+}
 /* For this demo, we assume that we're always authenticating the
  * latest passenger. In a production app, you would also typically
  * have a user authentication system for passengers.
@@ -46,6 +52,7 @@ router.post('/', async (req, res, next) => {
       passenger: passenger.id,
       amount: amount,
       currency: currency,
+      // TODO add
     });
     // Save the ride
     await ride.save();
@@ -92,5 +99,30 @@ router.post('/', async (req, res, next) => {
     next(`Error adding token to customer: ${err.message || err}`);
   }
 });
+
+/**
+ * POST /api/rides
+ *
+ * Create a new ride with the corresponding parameters.
+ */
+router.get('/', pilotRequired, async (req, res, next) => {
+  const pilot = req.user;
+  try {
+
+    Ride.find({
+      pilot: pilot
+    }, function(err, rides) {
+      res.send({
+        rides
+      });
+    });
+    // Return the ride info
+
+  } catch (err) {
+    res.sendStatus(500);
+    next(`Error adding token to customer: ${err.message || err}`);
+  }
+});
+
 
 module.exports = router;

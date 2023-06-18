@@ -13,7 +13,7 @@ const router = express.Router();
 function pilotRequired(req, res, next) {
   if (!req.isAuthenticated()) {
     return res.redirect('/pilots/login');
-  } 
+  }
   next();
 }
 
@@ -156,6 +156,7 @@ router.post('/payout', pilotRequired, async (req, res) => {
     });
     // This demo app only uses USD so we'll just use the first available balance
     // (Note: there is one balance for each currency used in your application)
+    console.log(balance)
     const {amount, currency} = balance.available[0];
     // Create a payout
     const payout = await stripe.payouts.create({
