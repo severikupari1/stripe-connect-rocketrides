@@ -4,7 +4,7 @@ import {useState, useEffect, useMemo, useCallback} from 'react';
 import {render} from 'react-dom';
 import Map, {Source, Layer} from 'react-map-gl';
 import ControlPanel from './control-panel';
-
+import GeoJson from './geojson-filtered.json';
 import {dataLayer} from './map-style';
 import {updatePercentiles} from './utils';
 
@@ -17,12 +17,7 @@ export default function Page() {
 
   useEffect(() => {
     /* global fetch */
-    fetch(
-      'https://raw.githubusercontent.com/uber/react-map-gl/master/examples/.data/us-income.geojson'
-    )
-      .then(resp => resp.json())
-      .then(json => setAllData(json))
-      .catch(err => console.error('Could not load data', err)); // eslint-disable-line
+    setAllData(GeoJson)
   }, []);
 
   const onHover = useCallback(event => {
@@ -37,7 +32,8 @@ export default function Page() {
   }, []);
 
   const data = useMemo(() => {
-    return allData && updatePercentiles(allData, f => f.properties.income[year]);
+    return allData
+    // return allData && updatePercentiles(allData, f => f.properties.income[year]);
   }, [allData, year]);
 
   return (
@@ -48,7 +44,7 @@ export default function Page() {
           longitude: -100,
           zoom: 3
         }}
-        mapStyle="mapbox://styles/mapbox/light-v9"
+        mapStyle="mapbox://styles/mapbox/streets-v12"
         mapboxAccessToken={MAPBOX_TOKEN}
         interactiveLayerIds={['data']}
         onMouseMove={onHover}
@@ -58,9 +54,9 @@ export default function Page() {
         </Source>
         {hoverInfo && (
           <div className="tooltip" style={{left: hoverInfo.x, top: hoverInfo.y}}>
-            <div>State: {hoverInfo.feature.properties.name}</div>
-            <div>Median Household Income: {hoverInfo.feature.properties.value}</div>
-            <div>Percentile: {(hoverInfo.feature.properties.percentile / 8) * 100}</div>
+            <div>Postinumero: {hoverInfo.feature.properties.postinumeroalue}</div>
+            <div>Nimi: {hoverInfo.feature.properties.nimi}</div>
+            <div>Väkiluku: {(hoverInfo.feature.properties.he_vakiy)}</div>
           </div>
         )}
       </Map>
