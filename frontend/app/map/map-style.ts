@@ -17,8 +17,9 @@ export const dataLayer: FillLayer = {
         [6, '#fdae61'],
         [7, '#f46d43'],
         [8, '#d53e4f']
-      ]
+      ],
+      default: '#3288bd'
     },
-    'fill-opacity': 0.8
+    'fill-opacity': 0.5
   }
 };

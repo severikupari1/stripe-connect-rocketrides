@@ -41,7 +41,7 @@ export default function RootLayout({ children }) {
   const isLoggedIn = false
   const hasNotifications = false
   return (
-    <html lang="en" className={"h-full bg-gray-100"}>
+    <html lang="en" className={"h-full"}>
       <body className={"h-full"}>
       {
         <Disclosure as="nav" className="bg-gray-800">

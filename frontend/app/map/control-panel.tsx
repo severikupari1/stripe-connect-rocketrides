@@ -1,10 +1,12 @@
 "use client"
 import * as React from 'react';
+import { NoSSR } from "next/dist/shared/lib/lazy-dynamic/dynamic-no-ssr";
 
 function ControlPanel(props) {
   const {year} = props;
 
   return (
+    <NoSSR>
     <div className="control-panel">
       <h3>Interactive GeoJSON</h3>
       <p>
@@ -36,6 +38,7 @@ function ControlPanel(props) {
         />
       </div>
     </div>
+    </NoSSR>
   );
 }
 
