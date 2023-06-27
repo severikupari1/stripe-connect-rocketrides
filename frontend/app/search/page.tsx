@@ -8,8 +8,8 @@ import { NoSSR } from "next/dist/shared/lib/lazy-dynamic/dynamic-no-ssr";
 
 export default function GeoCoding() {
   return (
-    <NoSSR>
-      <Wrapper>
+    <NoSSR >
+      <Wrapper >
         <ContentWrapper>
           <Title>Geocoding with Mapbox</Title>
           <InputField/>
@@ -23,10 +23,14 @@ export default function GeoCoding() {
 
 
 const Wrapper = styled.div`
-  background: none;
-  //height: 100vh;
+  //background: none;
+  height: 20vh;
   z-index: 2;
-  margin: 0 auto;
+  ////margin: ;
+  position: fixed;
+  //width: 10rem;
+  top: 100px;
+  left: 100px;
 `;
 
 const ContentWrapper = styled.div`
@@ -40,8 +44,8 @@ const Title = styled.h1`
   Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-style: normal;
   font-weight: bold;
-  font-size: 40px;
-  line-height: 48px;
+  //font-size: 40px;
+  //line-height: 48px;
   //color: #ffffff;
   text-align: center;
 `;
