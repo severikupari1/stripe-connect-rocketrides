@@ -4,7 +4,9 @@
   "type": "module",
   "scripts": {
     "test": "sst bind vitest",
-    "typecheck": "tsc -noEmit"
+    "typecheck": "tsc -noEmit",
+    "start:product": "node src/product/app.js --debug",
+    "dev:product": "nodemon -L --experimental-modules --es-module-specifier-resolution=node --watch ./../ --exec \"npm run start:product\""
   },
   "devDependencies": {
     "@types/node": "^20.3.1",

@@ -12,7 +12,7 @@ const InputField = () => {
             <Input
                 placeholder="Address"
                 { ...address }
-                istyping={ address.value !== "" }
+                isTyping={ address.value !== "" }
             />
             { address.suggestions?.length > 0 && (
                 <SuggestionWrapper>
@@ -58,7 +58,7 @@ const Input = styled.input`
 
   &:focus {
     outline: none;
-    border-radius: ${ (props) => props.istyping && "10px 10px 0px 0px" };
+    border-radius: ${ (props) => props.isTyping ? "10px 10px 0px 0px" : undefined };
   }
 `;
 const SuggestionWrapper = styled.div`

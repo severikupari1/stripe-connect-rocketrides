@@ -1,0 +1,13 @@
+POST http://localhost:3000/products
+Content-Type: application/json
+
+{
+  "name": "Testi tuote",
+  "description": "description",
+  "price": 10,
+  "currency": "EUR",
+  "active": true
+}
+
+
+###

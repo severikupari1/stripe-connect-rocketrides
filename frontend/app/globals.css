@@ -40,6 +40,6 @@ input {
     color: #fff;
     max-width: 300px;
     font-size: 10px;
-    z-index: 9;
+    z-index: 1;
     pointer-events: none;
 }

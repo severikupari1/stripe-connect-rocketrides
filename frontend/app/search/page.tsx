@@ -25,7 +25,7 @@ export default function GeoCoding() {
 const Wrapper = styled.div`
   //background: none;
   height: 20vh;
-  z-index: 2;
+  z-index: 1;
   ////margin: ;
   position: fixed;
   //width: 10rem;
