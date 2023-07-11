@@ -4,12 +4,19 @@ import express, { Request, Response } from 'express';
 import * as process from "process";
 import { mongooseConnect } from "../common/database/Mongoose";
 import { ProductModel } from "../common/models/Product";
+import swaggerUi from "swagger-ui-express";
+import swaggerFile from "./swagger-output.json" assert { type: "json" };
 
+console.log(swaggerFile)
 mongooseConnect.then(value => {
     // console.log(value)
 })
 // Create the Express app
 const app = express();
+
+
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerFile))
+
 app.use(express.json());
 
 // Get all products
@@ -86,6 +93,8 @@ const server = awsServerlessExpress.createServer(app);
 export const handler = (event: APIGatewayProxyEvent, context: Context): void => {
     awsServerlessExpress.proxy(server, event, context);
 };
+
+
 
 
 // Start the server on the correct port
