@@ -6,7 +6,7 @@
     "test": "sst bind vitest",
     "typecheck": "tsc -noEmit",
     "start:product": "cross-env NODE_OPTIONS='--experimental-specifier-resolution=node' node src/product/app.js --debug",
-    "dev:product": "nodemon -L --watch ./../ --exec \"npm run start:product\"",
+    "dev:product": "pwd && nodemon -L --ignore './../swagger-output.json' --watch ./../ --exec \"npm run start:product\"",
     "swagger:product": "cross-env NODE_OPTIONS='--experimental-specifier-resolution=node' node src/product/swagger.js"
   },
   "devDependencies": {

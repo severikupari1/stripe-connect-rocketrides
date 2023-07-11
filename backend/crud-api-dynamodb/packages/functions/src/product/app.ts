@@ -14,7 +14,7 @@ mongooseConnect.then(value => {
 // Create the Express app
 const app = express();
 
-
+// https://medium.com/swlh/automatic-api-documentation-in-node-js-using-swagger-dd1ab3c78284
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
 app.use(express.json());
@@ -47,9 +47,32 @@ app.get('/products/:productId', async (req: Request, res: Response) => {
 // Create a new product
 app.post('/products', async (req: Request, res: Response) => {
     const newProduct = req.body;
+    /*    #swagger.parameters['obj'] = {
+            in: 'body',
+            description: 'Create new product.',
+            schema: {
+              "name": "Testi tuote",
+              "description": "description",
+              "price": 10,
+              "currency": "EUR",
+              "active": true
+            }
+    } */
     try {
         const product = new ProductModel(newProduct);
         await product.save();
+         /* #swagger.responses[201] = {
+                description: 'Some description...',
+                schema: {
+                      "name": "Testi tuote",
+                      "description": "description",
+                      "price": 10,
+                      "currency": "EUR",
+                      "active": true,
+                      "_id": "64ad7c8ad87182167e7545bb",
+                      "__v": 0
+                }
+        } */
         res.status(201).json(product);
     } catch (error) {
         res.status(500).json({ error: 'Internal server error' });
@@ -60,9 +83,32 @@ app.post('/products', async (req: Request, res: Response) => {
 app.put('/products/:productId', async (req: Request, res: Response) => {
     const { productId } = req.params;
     const updatedProduct = req.body;
+    /*    #swagger.parameters['obj'] = {
+        in: 'body',
+        description: 'Update product with id',
+        schema: {
+          "name": "Testi tuote",
+          "description": "description",
+          "price": 10,
+          "currency": "EUR",
+          "active": true
+        }
+} */
     try {
         const product = await ProductModel.findByIdAndUpdate(productId, updatedProduct, { new: true }).exec();
         if (product) {
+        /* #swagger.responses[200] = {
+                description: 'Found product with id',
+                schema: {
+                      "name": "Testi tuote",
+                      "description": "description",
+                      "price": 10,
+                      "currency": "EUR",
+                      "active": true,
+                      "_id": "/products/:productId",
+                      "__v": 0
+                }
+        } */
             res.json(product);
         } else {
             res.status(404).json({ error: 'Product not found' });
@@ -93,9 +139,6 @@ const server = awsServerlessExpress.createServer(app);
 export const handler = (event: APIGatewayProxyEvent, context: Context): void => {
     awsServerlessExpress.proxy(server, event, context);
 };
-
-
-
 
 // Start the server on the correct port
 if (process.env.IS_LOCAL || true) {
