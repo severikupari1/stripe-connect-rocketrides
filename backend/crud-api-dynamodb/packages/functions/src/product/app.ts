@@ -1,9 +1,13 @@
 import awsServerlessExpress from 'aws-serverless-express';
 import { APIGatewayProxyEvent, Context } from 'aws-lambda';
 import express, { Request, Response } from 'express';
-import { ProductModel } from "@crud-api-dynamodb/core/models/Product.js";
 import * as process from "process";
+import { mongooseConnect } from "../common/database/Mongoose";
+import { ProductModel } from "../common/models/Product";
 
+mongooseConnect.then(value => {
+    // console.log(value)
+})
 // Create the Express app
 const app = express();
 app.use(express.json());
@@ -82,6 +86,7 @@ const server = awsServerlessExpress.createServer(app);
 export const handler = (event: APIGatewayProxyEvent, context: Context): void => {
     awsServerlessExpress.proxy(server, event, context);
 };
+
 
 // Start the server on the correct port
 if (process.env.IS_LOCAL || true) {
