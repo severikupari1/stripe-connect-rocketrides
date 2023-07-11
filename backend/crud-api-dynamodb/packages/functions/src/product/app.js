@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import awsServerlessExpress from 'aws-serverless-express';
 import express from 'express';
 import * as process from "process";
@@ -5,17 +6,35 @@ import { mongooseConnect } from "../common/database/Mongoose";
 import { ProductModel } from "../common/models/Product";
 import swaggerUi from "swagger-ui-express";
 import swaggerFile from "./swagger-output.json" assert { type: "json" };
-console.log(swaggerFile);
 mongooseConnect.then(value => {
     // console.log(value)
 });
 // Create the Express app
 const app = express();
+// enable CORS for all routes and for our specific API-Key header
+app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, api_key');
+    next();
+});
 // https://medium.com/swlh/automatic-api-documentation-in-node-js-using-swagger-dd1ab3c78284
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+// PROTECT ALL ROUTES THAT FOLLOW
+app.use((req, res, next) => {
+    const apiKey = req.get('api_key');
+    if (!apiKey || apiKey !== process.env.API_KEY) {
+        res.status(401).json({ error: 'unauthorised' });
+    }
+    else {
+        next();
+    }
+});
 app.use(express.json());
 // Get all products
 app.get('/products', async (_req, res) => {
+    /* #swagger.security = [{
+           "apiKeyAuth": []
+    }] */
     try {
         const products = await ProductModel.find().exec();
         res.json(products);
@@ -26,6 +45,9 @@ app.get('/products', async (_req, res) => {
 });
 // Get a specific product by ID
 app.get('/products/:productId', async (req, res) => {
+    /* #swagger.security = [{
+           "apiKeyAuth": []
+    }] */
     const { productId } = req.params;
     try {
         const product = await ProductModel.findById(productId).exec();
@@ -42,6 +64,9 @@ app.get('/products/:productId', async (req, res) => {
 });
 // Create a new product
 app.post('/products', async (req, res) => {
+    /* #swagger.security = [{
+           "apiKeyAuth": []
+    }] */
     const newProduct = req.body;
     /*    #swagger.parameters['obj'] = {
             in: 'body',
@@ -77,6 +102,9 @@ app.post('/products', async (req, res) => {
 });
 // Update a product
 app.put('/products/:productId', async (req, res) => {
+    /* #swagger.security = [{
+           "apiKeyAuth": []
+    }] */
     const { productId } = req.params;
     const updatedProduct = req.body;
     /*    #swagger.parameters['obj'] = {
@@ -117,6 +145,9 @@ app.put('/products/:productId', async (req, res) => {
 });
 // Delete a product
 app.delete('/products/:productId', async (req, res) => {
+    /* #swagger.security = [{
+           "apiKeyAuth": []
+    }] */
     const { productId } = req.params;
     try {
         const product = await ProductModel.findByIdAndDelete(productId).exec();

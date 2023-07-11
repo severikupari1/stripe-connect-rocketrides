@@ -25,7 +25,7 @@ services:
   product:
     build:
       context: ./
-      dockerfile: /backend/crud-api-dynamodb/packages/functions/src/common/product/Dockerfile
+      dockerfile: /backend/crud-api-dynamodb/packages/functions/src/product/Dockerfile
     volumes:
       - ./:/src
     working_dir: "/src/packages/functions/"
@@ -35,3 +35,5 @@ services:
     environment:
       NODE_ENV: development
       DEBUG: nodejs-docker-express:*
+    env_file:
+      - ./packages/functions/src/product/.env

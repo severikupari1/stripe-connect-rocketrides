@@ -15,8 +15,8 @@
     "apiKeyAuth": {
       "type": "apiKey",
       "in": "header",
-      "name": "X-API-KEY",
-      "description": "any description..."
+      "name": "api_key",
+      "description": "Api key for endpoints"
     }
   },
   "consumes": [
@@ -36,7 +36,12 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
       },
       "post": {
         "description": "",
@@ -115,7 +120,12 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
       }
     },
     "/products/{productId}": {
@@ -139,7 +149,12 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
       },
       "put": {
         "description": "",
@@ -153,7 +168,7 @@
           {
             "name": "obj",
             "in": "body",
-            "description": "Update new product.",
+            "description": "Update product with id",
             "schema": {
               "type": "object",
               "properties": {
@@ -227,7 +242,12 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
       },
       "delete": {
         "description": "",
@@ -249,7 +269,12 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
       }
     }
   }
