@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const config = {
     // Configuration for MongoDB
-    mongoUri: 'mongodb://root:example@host.docker.internal:27017/',
+    mongoUri: 'mongodb://root:example@mongo:27017/',
     mongoDbName: 'todonow',
 };
 const MONGODB_URI = config.mongoUri;

@@ -170,6 +170,6 @@ export const handler = (event, context) => {
 // Start the server on the correct port
 if (process.env.IS_LOCAL || true) {
     app.listen(process.env.PORT || 3000, () => {
-        console.log(`🚀 Rocket Rides server started: http://localhost:${process.env.PORT || 3000}`);
+        console.log(`🚀 Product api server started: http://localhost:${process.env.PORT || 3000}`);
     });
 }

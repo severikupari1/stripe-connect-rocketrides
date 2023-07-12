@@ -1,0 +1,26 @@
+###
+POST http://localhost:3001/signup
+Content-Type: application/json
+
+{
+  "email": "severi@gmail.com",
+  "password": "string"
+}
+
+<> 2023-07-13T002628.404.html
+
+###
+POST http://localhost:3001/login
+Content-Type: application/json
+
+{
+  "email": "severi@gmail.com",
+  "password": "string"
+}
+
+
+###
+GET http://localhost:3001/logout
+Content-Type: application/json
+
+

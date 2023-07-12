@@ -33,7 +33,6 @@ app.use((req, res, next) => {
     }
 })
 
-
 app.use(express.json());
 
 // Get all products
@@ -177,7 +176,7 @@ export const handler = (event: APIGatewayProxyEvent, context: Context): void => 
 // Start the server on the correct port
 if (process.env.IS_LOCAL || true) {
     app.listen(process.env.PORT || 3000, () => {
-        console.log(`🚀 Rocket Rides server started: http://localhost:${process.env.PORT || 3000}`);
+        console.log(`🚀 Product api server started: http://localhost:${process.env.PORT || 3000}`);
     });
 }
 
